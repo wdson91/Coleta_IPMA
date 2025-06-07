@@ -62,14 +62,6 @@ GET /api_playwright?distrito=Faro&location=Faro&use_cache=false
 * Python 3.8 ou superior
 * (Opcional) Docker e Docker Compose para execução via container
 
-### Instalar dependências
-
-Entendi! Vou incluir a criação do ambiente virtual e instalação das dependências antes desse comando, para ficar completo e organizado. Veja como fica a seção **Instalar dependências** atualizada:
-
----
-
-### ■ Instruções de instalação
-
 1. Crie e ative um ambiente virtual (recomendado):
 
 ```bash
