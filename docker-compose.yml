@@ -9,7 +9,9 @@ services:
       - redis
     networks:
       - minha_rede
-
+    environment:
+      - REDIS_HOST=redis
+      
   redis:
     image: redis
     container_name: redis
@@ -18,6 +20,7 @@ services:
     volumes:
       - redis_data:/data
     restart: unless-stopped
+    
     networks:
       - minha_rede
 
