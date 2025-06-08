@@ -85,10 +85,18 @@ GET /api_requests?distrito=Porto&location=Porto&data=2025-06-08
 
 ## ■ Instruções de instalação
 
+
+
 ### Pré-requisitos
 
 * Python 3.10 - 3.12
 * (Opcional) Docker e Docker Compose para execução via container
+### Clonar o Repositório
+```bash
+
+git clone https://github.com/wdson91/Coleta_IPMA.git
+
+```
 
 ### Instalar dependências
 
