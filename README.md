@@ -95,7 +95,7 @@ GET /api_requests?distrito=Porto&location=Porto&data=2025-06-08
 1. Crie e ative um ambiente virtual (recomendado):
 
 ```bash
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate   # Linux/macOS
 venv\Scripts\activate      # Windows
 ```
@@ -115,12 +115,24 @@ playwright install
 ### 1. Executar localmente
 
 ```bash
-uvicorn main:app --reload
+uvicorn main:app --reload --loop asyncio
 ```
 
 Acesse a aplicação em [http://localhost:8000](http://localhost:8000).
 
----
+> ℹ️ **Importante:** o uso de Redis é **opcional**, mas é **altamente recomendado** para uma interação mais rápida e fluida nas coletas com Playwright, evitando requisições repetidas e pesadas.
+
+
+### 2. Rodar Redis com Docker
+
+Para rodar um contêiner Redis localmente com o nome `redis` (necessário para `host="redis"` funcionar corretamente), execute:
+
+```bash
+docker run -d --name redis -p 6379:6379 redis
+```
+
+> Isso inicia um contêiner Redis padrão, disponível na porta `6379`, com o nome exato `redis`.
+
 
 ## 🐳 Executando com Docker Compose
 
