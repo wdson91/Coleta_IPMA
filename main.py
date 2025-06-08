@@ -9,7 +9,7 @@ import httpx
 from datetime import datetime
 
 
-redis_client = redis.Redis(host="localhost", port=6379, decode_responses=True)
+redis_client = redis.Redis(host="redis", port=6379, decode_responses=True)
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
