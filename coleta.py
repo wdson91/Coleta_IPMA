@@ -95,7 +95,7 @@ async def buscar_previsao(distrito: str, location: str):
                     }
 
                     previsao_semana.append(previsao_dia)
-                    print(f"Previsão para {data_real}: {previsao_dia}")
+
                 except Exception as e:
                     previsao_semana.append(
                         {"erro": f"Falha ao processar um dia: {str(e)}"}
