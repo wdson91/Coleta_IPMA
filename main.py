@@ -7,9 +7,10 @@ import redis.asyncio as redis
 import json
 import httpx
 from datetime import datetime
+import os
 
-
-redis_client = redis.Redis(host="redis", port=6379, decode_responses=True)
+redis_host = os.getenv("REDIS_HOST", "localhost")
+redis_client = redis.Redis(host=redis_host, port=6379, decode_responses=True)
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
@@ -73,11 +74,7 @@ async def api_playwright(
 
         cache = None
         if use_cache:
-            try:
-                cache = await redis_client.get(chave)
-            except Exception:
-                # Ignora erro no Redis e segue sem cache
-                cache = None
+            cache = await redis_client.get(chave)
 
         if cache:
             previsao = json.loads(cache)
@@ -86,9 +83,9 @@ async def api_playwright(
             if previsao is not None and use_cache:
                 try:
                     await redis_client.set(chave, json.dumps(previsao), ex=86400)
-                except Exception:
-                    # Ignora erro ao salvar cache
-                    pass
+                    print(f"[CACHE SALVO] {chave}")
+                except Exception as e:
+                    print(f"[ERRO AO SALVAR CACHE] {e}")
 
         # Filtra por data se necessário
         if data:
