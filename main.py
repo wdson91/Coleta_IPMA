@@ -68,26 +68,31 @@ async def api_playwright(
         True, description="Se false, ignora cache e coleta de novo"
     ),
 ):
-
     try:
         chave = f"{distrito}:{location}"
 
-        # Verifica se a chave já existe no cache se use_cache for True
-        cache = await redis_client.get(chave) if use_cache else None
+        cache = None
+        if use_cache:
+            try:
+                cache = await redis_client.get(chave)
+            except Exception:
+                # Ignora erro no Redis e segue sem cache
+                cache = None
 
-        # Se a chave não existe ou use_cache é False, busca a previsão
-        previsao = (
-            json.loads(cache) if cache else await buscar_previsao(distrito, location)
-        )
-
-        # Se não tiver cache, armazena a previsão no Redis
-        if not cache:
-            await redis_client.set(chave, json.dumps(previsao), ex=86400)
+        if cache:
+            previsao = json.loads(cache)
+        else:
+            previsao = await buscar_previsao(distrito, location)
+            if previsao is not None and use_cache:
+                try:
+                    await redis_client.set(chave, json.dumps(previsao), ex=86400)
+                except Exception:
+                    # Ignora erro ao salvar cache
+                    pass
 
         # Filtra por data se necessário
         if data:
             try:
-                # Valida formato da data
                 datetime.strptime(data, "%Y-%m-%d")
                 previsao = [p for p in previsao if p.get("data") == data]
             except ValueError:
@@ -97,9 +102,6 @@ async def api_playwright(
                 )
 
         return {
-            "distrito": distrito,
-            "location": location,
-            "data_filtrada": data if data else None,
             "previsao": previsao,
         }
 
