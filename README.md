@@ -87,7 +87,7 @@ GET /api_requests?distrito=Porto&location=Porto&data=2025-06-08
 
 ### Pré-requisitos
 
-* Python 3.8 ou superior
+* Python 3.10 - 3.12
 * (Opcional) Docker e Docker Compose para execução via container
 
 ### Instalar dependências
@@ -289,3 +289,4 @@ Atualmente, embora os dados extraídos via `requests` e `Playwright` sejam seman
 * Validação e normalização dos nomes também no frontend para melhorar a experiência do usuário.
 * Eventual suporte à internacionalização para outras línguas/regiões.
 * Melhor tratamento de erros e mensagens amigáveis em caso de falha na raspagem.
+* Eventual mudança para um input com autocomplete
