@@ -129,8 +129,14 @@
   }
 
   function filtrarPorData(dataSelecionada) {
-  if (!dataSelecionada || !dadosOriginais.length) return;
+  if (!dadosOriginais.length) return;
 
+  if (!dataSelecionada) {
+    // Se o filtro foi limpo, mostrar todos os dados
+    renderizarPrevisoes(dadosOriginais);
+    return;
+  }
+  
   const filtrados = dadosOriginais.filter(dia => {
     const dataObj = new Date(dia.dataPrev);
     const dataFormatada = dataObj.getFullYear() + '-' +
@@ -163,6 +169,7 @@
 
       // Verifica se já existe data selecionada
       const dataSelecionada = document.getElementById('filtro-data').value;
+      
       if (dataSelecionada) {
         filtrarPorData(dataSelecionada);
       } else {
